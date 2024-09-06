@@ -1,5 +1,5 @@
 import streamlit as st
 
-st.title('🤖 futuJob resume tailoring AI app')
+st.title('🤖 FutuJob resume tailoring AI app')
 
-st.write('This is app builds a machine learning model!')
+st.info('This is app builds a machine learning model!')
