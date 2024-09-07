@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-RAPID_API_KEY = os.getenv("API_KEY")
+RAPID_API_KEY = os.getenv("RAPID_API_KEY")
 
 url = "https://jsearch.p.rapidapi.com/search-filters"
 
