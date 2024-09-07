@@ -26,7 +26,18 @@ df = pd.read_csv('https://raw.githubusercontent.com/alialaki/data/master/penguin
 df
 
 
-response = response.json()
+data = response.json()
 
-st.write(resonse)
+def main():
+    st.title("JSON Data")
+
+    # Display the JSON data as a formatted string
+    st.code(json.dumps(data, indent=4))
+
+    # Optionally, display individual elements from the JSON data
+    for key, value in data.items():
+        st.write(f"**{key}:** {value}")
+
+if __name__ == "__main__":
+    main()
 
