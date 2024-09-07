@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-
+import json
 
 st.title('🤖 FutuJob resume tailoring AI app')
 
