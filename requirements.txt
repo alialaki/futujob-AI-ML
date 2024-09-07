@@ -1,4 +1,4 @@
-dotenv
+pip install dotenv
 streamlit
 numpy
 pandas
