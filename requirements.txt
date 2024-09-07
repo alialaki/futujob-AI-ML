@@ -4,3 +4,4 @@ pandas
 scikit-learn
 requests
 dotenv==0.0.5
+pip install json
