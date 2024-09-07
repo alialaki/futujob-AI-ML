@@ -24,5 +24,5 @@ df = pd.read_csv('https://raw.githubusercontent.com/alialaki/data/master/penguin
 df
 
 
-print(response.json())
+response.json())
 
