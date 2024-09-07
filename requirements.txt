@@ -1,8 +1,6 @@
-pip==24.2
 streamlit
 numpy
 pandas
-scikit-learn
+scikit-learn  
 requests
-dotenv
-json
+dotenv  
