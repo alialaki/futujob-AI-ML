@@ -3,4 +3,4 @@ numpy
 pandas
 scikit-learn
 requests
-dotenv
+dotenv==0.0.5
