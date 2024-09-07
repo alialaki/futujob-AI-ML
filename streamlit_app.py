@@ -6,7 +6,7 @@ import dotenv
 from dotenv import load_dotenv
 
 # Security best practice: Store API key securely
-load_dotenv()
+
 RAPID_API_KEY = os.getenv("RAPID_API_KEY")
 
 if not RAPID_API_KEY:
