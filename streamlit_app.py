@@ -2,15 +2,19 @@ import streamlit as st
 import pandas as pd
 import json
 import requests
+import dotenv
+from dotenv import load_dotenv
 
-RAPIDAPI_API_KEY = 
+load_dotenv()
+
+RAPID_API_KEY = os.getenv("API_KEY")
 
 url = "https://jsearch.p.rapidapi.com/search-filters"
 
 querystring = {"query":"Node.js developer in New-York,USA","date_posted":"all"}
 
 headers = {
-	"x-rapidapi-key": "673b3befb0mshea186ed7da8eb81p1fd395jsnae3d478a96fb",
+	"x-rapidapi-key": "RAPID_API_KEY",
 	"x-rapidapi-host": "jsearch.p.rapidapi.com"
 }
 
