@@ -3,6 +3,8 @@ import pandas as pd
 import json
 import requests
 
+RAPIDAPI_API_KEY = 
+
 url = "https://jsearch.p.rapidapi.com/search-filters"
 
 querystring = {"query":"Node.js developer in New-York,USA","date_posted":"all"}
