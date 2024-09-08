@@ -1,57 +1,36 @@
 import streamlit as st
 import pandas as pd
-import json
-import requests
-import dotenv
-from dotenv import load_dotenv
+import numpy as np
 
-# Security best practice: Store API key securely
+st.title('Uber pickups in NYC')
 
-RAPID_API_KEY = os.getenv("RAPID_API_KEY")
+DATE_COLUMN = 'date/time'
+DATA_URL = ('https://s3-us-west-2.amazonaws.com/'
+            'streamlit-demo-data/uber-raw-data-sep14.csv.gz')
 
-if not RAPID_API_KEY:
-    st.error("Please set the 'RAPID_API_KEY' environment variable.")
-    st.stop()
+@st.cache_data
+def load_data(nrows):
+    data = pd.read_csv(DATA_URL, nrows=nrows)
+    lowercase = lambda x: str(x).lower()
+    data.rename(lowercase, axis='columns', inplace=True)
+    data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
+    return data
 
-url = "https://jsearch.p.rapidapi.com/search-filters"
+data_load_state = st.text('Loading data...')
+data = load_data(10000)
+data_load_state.text("Done! (using st.cache_data)")
 
-querystring = {"query": "Node.js developer in New-York,USA", "date_posted": "all"}
+if st.checkbox('Show raw data'):
+    st.subheader('Raw data')
+    st.write(data)
 
-headers = {
-    "x-rapidapi-key": RAPID_API_KEY,
-    "x-rapidapi-host": "jsearch.p.rapidapi.com"
-}
+st.subheader('Number of pickups by hour')
+hist_values = np.histogram(data[DATE_COLUMN].dt.hour, bins=24, range=(0,24))[0]
+st.bar_chart(hist_values)
 
-# Handle potential API errors gracefully
-try:
-    response = requests.get(url, headers=headers, params=querystring)
-    response.raise_for_status()  # Raise an exception for non-2xx status codes
-except requests.exceptions.RequestException as e:
-    st.error(f"API request failed: {e}")
-    st.stop()
+# Some number in the range 0-23
+hour_to_filter = st.slider('hour', 0, 23, 17)
+filtered_data = data[data[DATE_COLUMN].dt.hour == hour_to_filter]
 
-st.title(' FutuJob resume tailoring AI app')
-st.info('This is app builds a machine learning model!')
-
-# Example: Display sample data (replace with your actual data manipulation)
-df = pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'], 'Job Title': ['Software Engineer', 'Data Scientist', 'Product Manager']})
-st.write(df)
-
-# Handle successful API response
-data = response.json()
-
-def download_json_file(json_data, filename="job_search_results.json"):
-    """Saves the JSON data to a file."""
-    with open(filename, "w") as f:
-        json.dump(json_data, f, indent=4)
-    st.success(f"JSON data saved to: {filename}")
-
-if st.button("Download JSON Data"):
-    download_json_file(data)
-
-st.title("JSON Data (Preview)")
-st.code(json.dumps(data, indent=4))  # Display formatted JSON data
-
-# Optionally display individual elements based on API response structure
-# for key, value in data.items():
-#     st.write(f"**{key}:** {value}")
+st.subheader('Map of all pickups at %s:00' % hour_to_filter)
+st.map(filtered_data)
