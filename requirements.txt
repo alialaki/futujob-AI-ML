@@ -1,4 +1,5 @@
+google-cloud-aiplatform
+langchain
 streamlit
-scikit-learn  
 requests
-
+python-dotenv
