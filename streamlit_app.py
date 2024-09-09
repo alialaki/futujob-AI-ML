@@ -10,7 +10,7 @@ from dotenv import load_dotenv, dotenv_values, find_dotenv
 
 load_dotenv(find_dotenv())
 
-api_key = os.getenv("RAPIDAPI_KEY")
+api_key = os.getenv("RAPID_API_KEY")
 
 # Check if API key is loaded
 if not api_key:
